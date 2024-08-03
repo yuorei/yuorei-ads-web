@@ -10,11 +10,11 @@ import {
   Grid,
   Card,
   CardContent,
-  TextField,
   Box,
   IconButton,
 } from "@mui/material";
 import { Search, TrendingUp, Assessment, Close } from "@mui/icons-material";
+import Link from "next/link";
 
 const HomePage = () => {
   const [showChatBubble, setShowChatBubble] = useState(true);
@@ -26,14 +26,18 @@ const HomePage = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             AdService
           </Typography>
-          <Button color="inherit">ログイン</Button>
-          <Button color="primary" variant="contained" className="ml-2">
-            無料で始める
-          </Button>
+          <Link href="/login">
+            <Button color="inherit">ログイン</Button>
+          </Link>
+          <Link href="/register">
+            <Button color="primary" variant="contained" className="ml-2">
+              今すぐはじめる
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="lg" className="mt-16">
+      <Container maxWidth="lg" className="mt-16 text-black">
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Typography variant="h2" component="h1" className="font-bold mb-4">
@@ -44,15 +48,28 @@ const HomePage = () => {
             <Typography variant="h5" className="mb-6 text-gray-600">
               簡単な設定で、ターゲットに合わせた広告を配信
             </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="メールアドレスを入力"
-              className="mb-4"
-            />
-            <Button variant="contained" color="primary" size="large" fullWidth>
-              無料トライアルを開始
-            </Button>
+            <div className="flex justify-center ">
+              <Link href="/register">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  className="mr-2"
+                >
+                  今すぐはじめる
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: "white", color: "primary" }}
+                  size="large"
+                  className="text-blue-500"
+                >
+                  無料で相談する
+                </Button>
+              </Link>
+            </div>
           </Grid>
           <Grid
             item
@@ -60,11 +77,7 @@ const HomePage = () => {
             md={6}
             className="flex items-center justify-center"
           >
-            <img
-              src="/api/placeholder/500/300"
-              alt="広告のイメージ"
-              className="rounded-lg shadow-lg"
-            />
+            <img src="" alt="広告のイメージ" className="rounded-lg shadow-lg" />
           </Grid>
         </Grid>
 
