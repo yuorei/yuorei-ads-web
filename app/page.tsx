@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
 import {
   AppBar,
   Toolbar,
@@ -10,11 +12,13 @@ import {
   CardContent,
   TextField,
   Box,
-  Fab,
+  IconButton,
 } from "@mui/material";
-import { Search, TrendingUp, Assessment } from "@mui/icons-material";
+import { Search, TrendingUp, Assessment, Close } from "@mui/icons-material";
 
 const HomePage = () => {
+  const [showChatBubble, setShowChatBubble] = useState(true);
+
   return (
     <div className="min-h-screen bg-gray-100">
       <AppBar position="static" className="bg-white text-gray-800">
@@ -115,6 +119,45 @@ const HomePage = () => {
         </Container>
       </footer>
 
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          alignItems: "end",
+        }}
+      >
+        {showChatBubble && (
+          <Box
+            sx={{
+              backgroundColor: "white",
+              color: "black",
+              padding: "8px 16px",
+              borderRadius: "16px",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              marginBottom: "8px",
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            チャットで相談
+            <IconButton
+              size="small"
+              onClick={() => setShowChatBubble(false)}
+              sx={{ marginLeft: 1 }}
+            >
+              <Close fontSize="small" />
+            </IconButton>
+          </Box>
+        )}
+        <Button>
+          <Image src="" alt="ヘルプ" width={50} height={50} />
+        </Button>
+      </Box>
     </div>
   );
 };
