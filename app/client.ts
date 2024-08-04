@@ -4,6 +4,7 @@ import { createConnectTransport } from "@connectrpc/connect-web";
 // Import service definition that you want to connect to.
 // import { ElizaService } from "@buf/connectrpc_eliza.connectrpc_es/connectrpc/eliza/v1/eliza_connect";
 import { AdManagementService } from "@/app/gen/rpc/ads/v1/ads_connect";
+import { OrganizationService } from "@/app/gen/rpc/organization/v1/organization_connect";
 
 
 // The transport defines what type of endpoint we're hitting.
@@ -17,3 +18,4 @@ const transport = createConnectTransport({
 // Here we make the client itself, combining the service
 // definition with the transport.
 export const clientAds = createPromiseClient(AdManagementService, transport);
+export const clientOrganization = createPromiseClient(OrganizationService, transport);
