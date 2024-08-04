@@ -49,7 +49,7 @@ const HomePage = () => {
               簡単な設定で、ターゲットに合わせた広告を配信
             </Typography>
             <div className="flex justify-center ">
-              <Link href="/register">
+              <Link href="/register/organization">
                 <Button
                   variant="contained"
                   color="primary"
