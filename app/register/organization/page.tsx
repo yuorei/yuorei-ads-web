@@ -1,3 +1,4 @@
+// TODO: UIの改善
 "use client";
 import { useState } from "react";
 import { TextField, Button, MenuItem } from "@mui/material";
@@ -13,22 +14,34 @@ const categories = [
 const OrganizationForm = () => {
   const [organizationID, setOrganizationID] = useState("");
   const [organizationName, setOrganizationName] = useState("");
-  const [representativeName, setRepresentativeName] = useState("");
-  const [representativeEmail, setRepresentativeEmail] = useState("");
   const [purpose, setPurpose] = useState("");
   const [category, setCategory] = useState("");
-
+  const [clientSecret, setClientSecret] = useState("");
+  const [clientSecretConfirm, setClientSecretConfirm] = useState("");
+  let token = localStorage.getItem("token") || "";
   const handleSubmit = (e: React.FormEvent) => {
+    if (clientSecret !== clientSecretConfirm) {
+      alert("クライアントシークレットが一致しません");
+    }
+    let clientID = localStorage.getItem("clientID") || "";
+    if (clientID === "") {
+      clientID = "client" + "_" + crypto.randomUUID();
+      localStorage.setItem("clientID", clientID);
+    }
+
     e.preventDefault();
     clientOrganization
-      .createTmpOrganization({
-        organizationId: organizationID,
-        organizationName: organizationName,
-        representativeName: representativeName,
-        representativeEmail: representativeEmail,
-        purpose: purpose,
-        category: category,
-      })
+      .createTmpOrganization(
+        {
+          organizationId: organizationID,
+          organizationName: organizationName,
+          purpose: purpose,
+          category: category,
+          clientId: clientID,
+          clientSecret: clientSecret,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       .then((res) => {
         console.log(res);
         window.location.href = `/register/${res.organizationId}/account/admin`;
@@ -63,27 +76,6 @@ const OrganizationForm = () => {
       </div>
       <div className="mb-4">
         <TextField
-          label="代表者名"
-          variant="outlined"
-          fullWidth
-          value={representativeName}
-          onChange={(e) => setRepresentativeName(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <TextField
-          label="代表者メールアドレス"
-          variant="outlined"
-          fullWidth
-          type="email"
-          value={representativeEmail}
-          onChange={(e) => setRepresentativeEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <TextField
           label="目的"
           variant="outlined"
           fullWidth
@@ -107,6 +99,28 @@ const OrganizationForm = () => {
             </MenuItem>
           ))}
         </TextField>
+      </div>
+      <div className="mb-4">
+        <TextField
+          label="クライアントシークレット"
+          variant="outlined"
+          fullWidth
+          type="password"
+          value={clientSecret}
+          onChange={(e) => setClientSecret(e.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <TextField
+          label="クライアントシークレット確認"
+          variant="outlined"
+          fullWidth
+          type="password"
+          value={clientSecretConfirm}
+          onChange={(e) => setClientSecretConfirm(e.target.value)}
+          required
+        />
       </div>
       <Button type="submit" variant="contained" color="primary" fullWidth>
         登録
