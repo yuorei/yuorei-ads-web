@@ -12,7 +12,7 @@ import { OrganizationService } from "@/app/gen/rpc/organization/v1/organization_
 // If your endpoint only supports gRPC-web, make sure to use
 // `createGrpcWebTransport` instead.
 const transport = createConnectTransport({
-  baseUrl: "http://localhost:8080",
+  baseUrl: `${process.env.NEXT_PUBLIC_API}`,
 });
 
 // Here we make the client itself, combining the service
