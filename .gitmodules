@@ -1,3 +1,6 @@
 [submodule "yuorei-ads-server"]
 	path = yuorei-ads-server
 	url = git@github.com:yuorei/yuorei-ads-server.git
+[submodule "yuorei-ads-proto"]
+	path = yuorei-ads-proto
+	url = git@github.com:yuorei/yuorei-ads-proto.git
