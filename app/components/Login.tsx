@@ -16,6 +16,7 @@ const HomePage = () => {
         setToken(token);
         window.localStorage.setItem("token", token);
       });
+      window.location.href = "/dashboard";
     }
   }, [user]);
 
