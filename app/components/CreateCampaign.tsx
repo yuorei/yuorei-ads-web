@@ -22,15 +22,23 @@ function CreateCampaign() {
   const [endDate, setEndDate] = useState("");
 
   const handleCreateCampaign = async () => {
-    const res = await clientAds.createCampaign(
-      new CreateCampaignRequest({
-        name,
-        budget: typeof budget === "number" ? budget : parseInt(budget),
-        startDate,
-        endDate,
-      })
-    );
-    setCampaign(res);
+    try {
+      const res = await clientAds.createCampaign(
+        {
+          name,
+          budget: typeof budget === "number" ? budget : parseInt(budget),
+          startDate,
+          endDate,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      setCampaign(res);
+    } catch (error) {
+      console.error("Failed to create campaign:", error);
+      alert("Failed to create campaign");
+    }
   };
 
   return (
