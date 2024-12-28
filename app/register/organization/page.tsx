@@ -44,7 +44,7 @@ const OrganizationForm = () => {
       )
       .then((res) => {
         console.log(res);
-        window.location.href = `/register/${res.organizationId}/account/admin`;
+        window.location.href = `/register/organization/${res.organizationId}/account/admin`;
       });
   };
 
