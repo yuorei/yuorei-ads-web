@@ -1,5 +1,5 @@
 gen:
-	npx buf generate ./yuorei-ads-server/
+	npx buf generate ./yuorei-ads-proto/
 dev:
 	npm run dev
 build:

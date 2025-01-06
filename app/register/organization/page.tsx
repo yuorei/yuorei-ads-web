@@ -1,6 +1,6 @@
-// TODO: UIの改善
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { TextField, Button, MenuItem } from "@mui/material";
 import { clientOrganization } from "@/app/client";
 
@@ -18,18 +18,31 @@ const OrganizationForm = () => {
   const [category, setCategory] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [clientSecretConfirm, setClientSecretConfirm] = useState("");
-  let token = localStorage.getItem("token") || "";
+  const [token, setToken] = useState("");
+  const [clientID, setClientID] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token") || "";
+      setToken(storedToken);
+
+      let storedClientID = localStorage.getItem("clientID") || "";
+      if (!storedClientID) {
+        storedClientID = "client" + "_" + crypto.randomUUID();
+        localStorage.setItem("clientID", storedClientID);
+      }
+      setClientID(storedClientID);
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (clientSecret !== clientSecretConfirm) {
       alert("クライアントシークレットが一致しません");
-    }
-    let clientID = localStorage.getItem("clientID") || "";
-    if (clientID === "") {
-      clientID = "client" + "_" + crypto.randomUUID();
-      localStorage.setItem("clientID", clientID);
+      return;
     }
 
-    e.preventDefault();
     clientOrganization
       .createTmpOrganization(
         {
@@ -44,7 +57,11 @@ const OrganizationForm = () => {
       )
       .then((res) => {
         console.log(res);
-        window.location.href = `/register/${res.organizationId}/account/admin`;
+        window.location.href = `/register/organization/${res.organizationId}/account/admin`;
+      })
+      .catch((error) => {
+        console.error("Error creating organization:", error);
+        alert("組織の登録に失敗しました。");
       });
   };
 
