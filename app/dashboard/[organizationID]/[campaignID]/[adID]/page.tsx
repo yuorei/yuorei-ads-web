@@ -1,4 +1,5 @@
 import AdsGraph from "@/app/components/ChartAds";
+import Link from "next/link";
 
 export default function Page({
   params,
@@ -11,6 +12,9 @@ export default function Page({
   return (
     <div>
       <AdsGraph adID={params.adID} start={start} end={end} />
+      <Link href={`/dashboard/${params.organizationID}?adID=${params.adID}`}>
+        戻る
+      </Link>
     </div>
   );
 }

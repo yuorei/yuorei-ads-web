@@ -11,7 +11,7 @@ export default function Page({
   const [metaData, setMetaData] = useState({
     title: "",
     description: "",
-    thumbnail_image_url: "",
+    // thumbnail_image_url: "",
     tags: "",
     is_private: false,
     is_adult: false,
@@ -89,7 +89,7 @@ export default function Page({
       // Metaデータを追加
       formData.append("title", metaData.title);
       formData.append("description", metaData.description);
-      formData.append("thumbnail_image_url", metaData.thumbnail_image_url);
+      // formData.append("thumbnail_image_url", metaData.thumbnail_image_url);
       formData.append("tags", metaData.tags);
       formData.append("is_private", metaData.is_private.toString());
       formData.append("is_adult", metaData.is_adult.toString());
@@ -100,13 +100,16 @@ export default function Page({
 
       try {
         // TODO: URLを環境変数に移動
-        const response = await fetch("http://localhost:8085/ad/video", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API}/ad/video`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        );
 
         if (response.ok) {
           console.log(`Chunk ${i + 1} of ${totalChunks} uploaded successfully`);
@@ -115,7 +118,7 @@ export default function Page({
             const responseData = await response.json();
             const { adID } = responseData;
             if (adID) {
-              window.location.href = `/${params.organizationID}/${metaData.campaign_id}/${adID}`;
+              window.location.href = `/dashboard/${params.organizationID}/${metaData.campaign_id}/${adID}`;
             }
           }
         } else {
@@ -146,12 +149,12 @@ export default function Page({
         placeholder="Description"
         onChange={handleMetaChange}
       ></textarea>
-      <input
+      {/* <input
         type="text"
         name="thumbnail_image_url"
         placeholder="Thumbnail URL"
         onChange={handleMetaChange}
-      />
+      /> */}
       <input
         type="text"
         name="tags"

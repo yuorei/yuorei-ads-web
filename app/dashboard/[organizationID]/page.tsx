@@ -1,6 +1,7 @@
 import React from "react";
-import DashboardHeader from "@/app/components/DashboardHeader";
+// import DashboardHeader from "@/app/components/DashboardHeader";
 import DashboardMenu from "@/app/components/DashboardMenu";
+import Dashboard from "@/app/components/Dashboard";
 export default function Page({
   params,
 }: {
@@ -8,12 +9,15 @@ export default function Page({
 }) {
   return (
     <>
-      <DashboardHeader />
+      {/* <DashboardHeader /> */}
       <div className="flex">
         <DashboardMenu organizationID={params.organizationID} />
-        <div className="p-4 bg-black">Content</div>
       </div>
-      <div className="p-4 bg-gray-100">Content2</div>
+      <Dashboard
+        organizationId={params.organizationID}
+        offset={0}
+        limit={100}
+      />
     </>
   );
 }
