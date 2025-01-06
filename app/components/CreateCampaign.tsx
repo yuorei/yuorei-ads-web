@@ -37,7 +37,7 @@ function CreateCampaign() {
       setCampaign(res);
     } catch (error) {
       console.error("Failed to create campaign:", error);
-      alert("Failed to create campaign");
+      alert(error);
     }
   };
 
