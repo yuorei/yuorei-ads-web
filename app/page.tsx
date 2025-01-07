@@ -18,6 +18,7 @@ import Link from "next/link";
 
 const HomePage = () => {
   const [showChatBubble, setShowChatBubble] = useState(true);
+  const date = new Date();
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -127,7 +128,7 @@ const HomePage = () => {
       <footer className="bg-gray-800 text-white mt-16 py-8">
         <Container maxWidth="lg">
           <Typography variant="body2" align="center">
-            © 2024 AdService. All rights reserved.
+            © {date.getFullYear()} AdService. All rights reserved.
           </Typography>
         </Container>
       </footer>
